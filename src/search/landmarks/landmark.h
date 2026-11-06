@@ -20,6 +20,7 @@ enum LandmarkType {
     DISJUNCTIVE,
     ATOMIC,
     CONJUNCTIVE,
+    DISJUNCTIVE_ACTION,
 };
 
 class Landmark {
@@ -33,7 +34,8 @@ public:
           is_derived(is_derived) {
         assert(
             (type == ATOMIC && atoms.size() == 1) ||
-            (type != ATOMIC && atoms.size() > 1));
+            ((type == DISJUNCTIVE || type == CONJUNCTIVE) && atoms.size() > 1) ||
+            (type == DISJUNCTIVE_ACTION && atoms.size() == 0));
     }
 
     bool operator==(const Landmark &other) const {
@@ -49,7 +51,7 @@ public:
     bool is_true_in_goal;
     bool is_derived;
 
-    std::unordered_set<int> first_achievers;
+    std::unordered_set<int> first_achievers; //container
     std::unordered_set<int> possible_achievers;
 
     bool is_true_in_state(const State &state) const;
