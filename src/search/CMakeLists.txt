@@ -894,6 +894,7 @@ create_fast_downward_library(
         landmarks/landmark_cost_partitioning_heuristic
         landmarks/landmark_factory
         landmarks/landmark_factory_hm
+        landmarks/landmark_factory_lm_cut
         landmarks/landmark_factory_reasonable_orders_hps
         landmarks/landmark_factory_merged
         landmarks/landmark_factory_relaxation
