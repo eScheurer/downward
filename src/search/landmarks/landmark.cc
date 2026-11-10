@@ -11,9 +11,10 @@ bool Landmark::is_true_in_state(const State &state) const {
     };
     if (type == DISJUNCTIVE) {
         return ranges::any_of(atoms, is_atom_true_in_state);
-    } else {
-        assert(type == CONJUNCTIVE || type == ATOMIC);
+    } else if (type == CONJUNCTIVE || type == ATOMIC) {
         return ranges::all_of(atoms, is_atom_true_in_state);
+    } else { //if (type == DISJUNCTIVE_ACTION)
+        return false;
     }
 }
 

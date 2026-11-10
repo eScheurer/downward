@@ -6,14 +6,18 @@
 #define LANDMARK_FACTORY_LM_CUT_H
 
 #include "landmark_factory.h"
+#include <unordered_set>
 
 namespace landmarks {
 class LandmarkFactoryLMCut : public LandmarkFactory {
-    void generate_goal_landmarks(const TaskProxy &task_proxy) const;
-    void generate_all_atomic_landmarks(
-        const TaskProxy &task_proxy) const;
+    void generate_lm_cut_landmarks(const TaskProxy &task_proxy) const;
     virtual void generate_landmarks(
         const std::shared_ptr<AbstractTask> &task) override;
+
+    std::unordered_set<int> first_achievers;
+    std::unordered_set<int> possible_achievers;
+
+
 
 public:
     LandmarkFactoryLMCut(
