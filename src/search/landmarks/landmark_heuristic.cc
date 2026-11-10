@@ -118,9 +118,11 @@ void LandmarkHeuristic::compute_landmark_graph(
         log << "Landmark graph contains " << landmark_graph->get_num_landmarks()
             << " landmarks, of which "
             << landmark_graph->get_num_disjunctive_landmarks()
-            << " are disjunctive and "
+            << " are disjunctive, "
             << landmark_graph->get_num_conjunctive_landmarks()
-            << " are conjunctive." << endl;
+            << " are conjunctive and "
+            << landmark_graph->get_num_disjunctive_action_landmarks()
+            << " are action." << endl;
         log << "Landmark graph contains " << landmark_graph->get_num_orderings()
             << " orderings." << endl;
     }

@@ -69,6 +69,7 @@ class LandmarkGraph {
 
     int num_conjunctive_landmarks;
     int num_disjunctive_landmarks;
+    int num_disjunctive_action_landmarks;
 
     utils::HashMap<FactPair, LandmarkNode *> atomic_landmarks_to_nodes;
     utils::HashMap<FactPair, LandmarkNode *> disjunctive_landmarks_to_nodes;
@@ -112,6 +113,10 @@ public:
        when moving landmark graph creation there. */
     int get_num_conjunctive_landmarks() const {
         return num_conjunctive_landmarks;
+    }
+
+    int get_num_disjunctive_action_landmarks() const {
+        return num_disjunctive_action_landmarks;
     }
     /* This is needed only by landmark graph factories and will disappear
        when moving landmark graph creation there. */
