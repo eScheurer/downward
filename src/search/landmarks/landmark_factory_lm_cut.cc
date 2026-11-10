@@ -15,12 +15,12 @@ namespace landmarks {
         : LandmarkFactory(task, verbosity) {}
 
     void LandmarkFactoryLMCut::generate_lm_cut_landmarks(const TaskProxy &task_proxy) const {
-        lm_cut_heuristic::LandmarkCutLandmarks landmarks(task_proxy, true, true);
+        lm_cut_heuristic::LandmarkCutLandmarks lm_cut(task_proxy, true, true);
 
         State state = task_proxy.get_initial_state();
         vector<vector<int>> landmarkSet;
 
-        landmarks.compute_landmarks(
+        lm_cut.compute_landmarks(
             state, nullptr,
             [&landmarkSet](const vector<int> &lm, int){landmarkSet.push_back(lm);}); //The landmark_callback Lambda was constructed with the help of AI. TODO: propper declaration
 
