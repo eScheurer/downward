@@ -110,9 +110,9 @@ LandmarkNode &LandmarkGraph::add_landmark(Landmark &&landmark_to_add) {
     case CONJUNCTIVE:
         ++num_conjunctive_landmarks;
         break;
-        case DISJUNCTIVE_ACTION:
-            ++num_disjunctive_action_landmarks;
-            break;
+    case DISJUNCTIVE_ACTION:
+        ++num_disjunctive_action_landmarks;
+        break;
     }
     return *new_node;
 }
@@ -140,6 +140,9 @@ void LandmarkGraph::remove_node_occurrences(LandmarkNode *node) {
     case CONJUNCTIVE:
         --num_conjunctive_landmarks;
         break;
+    case DISJUNCTIVE_ACTION:
+         --num_disjunctive_action_landmarks;
+         break;
     }
 }
 

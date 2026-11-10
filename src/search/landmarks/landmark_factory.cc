@@ -130,7 +130,9 @@ void LandmarkFactory::log_landmark_graph_info(
                 << landmark_graph->get_num_disjunctive_landmarks()
                 << " are disjunctive and "
                 << landmark_graph->get_num_conjunctive_landmarks()
-                << " are conjunctive." << endl;
+                << " are conjunctive and "
+                << landmark_graph->get_num_disjunctive_action_landmarks()
+                << " are action." << endl;
             log << "There are " << landmark_graph->get_num_orderings()
                 << " landmark orderings." << endl;
         }
