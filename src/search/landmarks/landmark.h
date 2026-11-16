@@ -55,6 +55,7 @@ public:
     std::unordered_set<int> possible_achievers;
 
     bool is_true_in_state(const State &state) const;
+    bool achieves_a_landmark(OperatorID op_id) const;
     bool contains(const FactPair &atom) const;
 };
 }

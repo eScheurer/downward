@@ -98,6 +98,7 @@ ConstBitsetView LandmarkStatusManager::get_future_landmarks(
     return future_landmarks[state];
 }
 
+//TODO: anpassen für dijunctive action landmarks
 void LandmarkStatusManager::progress_initial_state(const State &initial_state) {
     BitsetView past = get_past_landmarks(initial_state);
     BitsetView future = get_future_landmarks(initial_state);
@@ -133,7 +134,7 @@ void LandmarkStatusManager::progress_initial_state(const State &initial_state) {
 }
 
 void LandmarkStatusManager::progress(
-    const State &parent_ancestor_state, OperatorID,
+    const State &parent_ancestor_state, OperatorID op_id, //verwenden für progress action, und an progress_landmark übergeben, ID für action
     const State &ancestor_state) {
     if (ancestor_state == parent_ancestor_state) {
         // This can happen, e.g., in Satellite-01.
@@ -153,20 +154,32 @@ void LandmarkStatusManager::progress(
 
     progress_landmarks(
         parent_past, parent_future, parent_ancestor_state, past, future,
-        ancestor_state);
+        ancestor_state, op_id);
     progress_goals(ancestor_state, future);
     progress_greedy_necessary_orderings(ancestor_state, past, future);
     progress_reasonable_orderings(past, future);
 }
 
-void LandmarkStatusManager::progress_landmarks(
-    ConstBitsetView &parent_past, ConstBitsetView &parent_future,
+void LandmarkStatusManager::progress_landmarks( //landmark von future in past wenn durch aktion erfüllt, past ansonsten nicht anlangen (auch nicht wenn schon in  past)
+    ConstBitsetView &parent_past, ConstBitsetView &parent_future, //neuer param
     const State &parent_ancestor_state, BitsetView &past, BitsetView &future,
-    const State &ancestor_state) {
+    const State &ancestor_state,OperatorID op_id ) { //parent_ancestor_sate = parent. ancestor = jetziger (vor task transformation state)
     for (const auto &node : landmark_graph) {
         int id = node->get_id();
         const Landmark &landmark = node->get_landmark();
-        if (parent_future.test(id)) {
+        if (parent_future.test(id)) { //falls es für parent noch zu erreichen galt
+            if (landmark.type == DISJUNCTIVE_ACTION) {
+                if (!landmark.achieves_a_landmark(op_id)) {
+                    future.set(id);
+                    if (!parent_past.test(id)) { // nötig?
+                        past.reset(id);
+                    }
+                } // else if (landmark.achieves_a_landmark(op_id)) { //interessiert und nicht?
+                //     assert(parent_past.test(id));
+                //     future.set(id);
+                // }
+                continue;
+            }
             if (!landmark.is_true_in_state(ancestor_state)) {
                 /*
                   A landmark that is future in the parent remains future
@@ -177,7 +190,7 @@ void LandmarkStatusManager::progress_landmarks(
                 if (!parent_past.test(id)) {
                     past.reset(id);
                 }
-            } else if (landmark.is_true_in_state(parent_ancestor_state)) {
+            } else if (landmark.is_true_in_state(parent_ancestor_state)) { // wenn es in diesem zustand gilt und im parent auch schon gegolten hat
                 /*
                   If the landmark held in the parent already, then it
                   was not added by this transition and should remain

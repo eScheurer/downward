@@ -18,6 +18,15 @@ bool Landmark::is_true_in_state(const State &state) const {
     }
 }
 
+bool Landmark::achieves_a_landmark(OperatorID op_id) const {
+    assert(type == DISJUNCTIVE_ACTION);
+    if (possible_achievers.contains(op_id.get_index())) {
+        return true;
+    }
+    return false;
+}
+
+
 bool Landmark::contains(const FactPair &atom) const {
     return ranges::find(atoms, atom) != atoms.end();
 }
