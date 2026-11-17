@@ -171,13 +171,10 @@ void LandmarkStatusManager::progress_landmarks( //landmark von future in past we
             if (landmark.type == DISJUNCTIVE_ACTION) {
                 if (!landmark.achieves_a_landmark(op_id)) {
                     future.set(id);
-                    if (!parent_past.test(id)) { // nötig?
+                    if (!parent_past.test(id)) {
                         past.reset(id);
                     }
-                } // else if (landmark.achieves_a_landmark(op_id)) { //interessiert und nicht?
-                //     assert(parent_past.test(id));
-                //     future.set(id);
-                // }
+                }
                 continue;
             }
             if (!landmark.is_true_in_state(ancestor_state)) {
