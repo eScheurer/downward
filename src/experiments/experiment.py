@@ -38,9 +38,6 @@ REV_NICKS = [
 ]
 ATTRIBUTES = [
     "error",
-    "run_dir",
-    "search_start_time",
-    "search_start_memory",
     "total_time",
     "coverage",
     "expansions",
@@ -48,7 +45,8 @@ ATTRIBUTES = [
     "dead_ends",
     "evaluations",
     "generated",
-    "plans",
+    "reopened",
+    "search_time",
     project.EVALUATIONS_PER_TIME,
 ]
 
