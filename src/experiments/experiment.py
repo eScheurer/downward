@@ -15,12 +15,16 @@ import project
 REPO = project.get_repo_base()
 BENCHMARKS_DIR = os.environ["DOWNWARD_BENCHMARKS"]
 SCP_LOGIN = "scheur0004@login12.scicore.unibas.ch" #"myname@myserver.com"
-REMOTE_REPOS_DIR = "/infai/username/projects"
+REMOTE_REPOS_DIR = os.environ["DOWNWARD_REPO"]
+
 # If REVISION_CACHE is None, the default "./data/revision-cache/" is used.
 REVISION_CACHE = os.environ.get("DOWNWARD_REVISION_CACHE")
 if project.REMOTE:
     SUITE = project.SUITE_OPTIMAL_STRIPS
-    ENV = project.BaselSlurmEnvironment(email="enya.scheurer@stud.unibas.ch") #my.name@myhost.ch"
+    ENV = project.BaselSlurmEnvironment(
+        partition="infai_2",
+        email="enya.scheurer@stud.unibas.ch",
+        export=["PATH"]) #my.name@myhost.ch"
 else:
     SUITE = ["blocks:probBLOCKS-4-0.pddl", "airport:p01-airport1-p1.pddl", "gripper:prob01.pddl"]
     ENV = project.LocalEnvironment(processes=2)
@@ -31,7 +35,7 @@ CONFIGS = [
     )
 ]
 BUILD_OPTIONS = []
-DRIVER_OPTIONS = []  # TODO: 30min for big test? + mem limit "--overall-memory-limit", "8G"
+DRIVER_OPTIONS = []
 
 REV_NICKS = [
     ("developement", ""),
