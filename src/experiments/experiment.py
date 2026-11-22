@@ -38,7 +38,7 @@ BUILD_OPTIONS = []
 DRIVER_OPTIONS = ["--overall-time-limit", "5m"]
 
 REV_NICKS = [
-    ("development", ""),
+    ("developement", ""),
 ]
 ATTRIBUTES = [
     "error",
